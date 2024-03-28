@@ -5,13 +5,18 @@ import { AutorEntity } from "./autor.entity";
 export class AutorRepository {
   private autores: AutorEntity[] = [];
 
+  async salvar(dadosAutor: AutorEntity) {
+    this.autores.push(dadosAutor);
+    return dadosAutor;
+  }
+
   async listarAutores() {
     return this.autores;
   }
 
-  async salvar(dadosAutor: AutorEntity) {
-    this.autores.push(dadosAutor);
-    return dadosAutor;
+  async buscarAutorPorId(id: string) {
+    const autor = this.buscaPorId(id);
+    return autor;
   }
 
   private buscaPorId(id: string) {

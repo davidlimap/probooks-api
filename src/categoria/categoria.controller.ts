@@ -1,11 +1,11 @@
-import { Body, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CategoriaRepository } from "./categoria.repository";
 import { CriaCategoriaDTO } from "./dto/CriaCategoria.dto";
 import { CategoriaEntity } from "./categoria.entity";
 import { v4 as uuid } from 'uuid';
 import { ListaCategoriaDTO } from "./dto/ListaCategoria.dto";
 
-
+@Controller()
 export class CategoriaController {
   constructor(private readonly categoriaRepository: CategoriaRepository) { }
 
