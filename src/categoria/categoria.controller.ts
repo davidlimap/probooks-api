@@ -5,7 +5,7 @@ import { CategoriaEntity } from "./categoria.entity";
 import { v4 as uuid } from 'uuid';
 import { ListaCategoriaDTO } from "./dto/ListaCategoria.dto";
 
-@Controller()
+@Controller('categoria')
 export class CategoriaController {
   constructor(private readonly categoriaRepository: CategoriaRepository) { }
 

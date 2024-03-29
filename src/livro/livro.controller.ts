@@ -35,7 +35,7 @@ export class LivroController {
 
     return {
       livro: new ListaLivroDTO(livroEntity.id, livroEntity.titulo, livroEntity.autorId, formatarData(livroEntity.dataPublicacao, FormatoData.PADRAO)),
-      messagem: 'Autor criado com sucesso',
+      messagem: 'Livro criado com sucesso',
     };
   }
 
@@ -44,7 +44,8 @@ export class LivroController {
     const livrosSalvos = await this.livroRepository.listarLivros();
     const livrosLista = livrosSalvos.map(
       async (livro) => {
-        const autorLivro = await this.autorRepository.buscarAutorPorId(livro.id);
+        console.log(livro);
+        const autorLivro = await this.autorRepository.buscarAutorPorId(livro.autorId);
         new ListaLivroDTO(livro.id, livro.titulo, autorLivro.nome, formatarData(livro.dataPublicacao, FormatoData.PADRAO))
       });
 
@@ -62,7 +63,7 @@ export class LivroController {
     );
 
     return {
-      mensagem: 'livro atualizado com sucesso',
+      mensagem: 'Livro atualizado com sucesso',
       produto: livroAlterado,
     };
   }
@@ -72,7 +73,7 @@ export class LivroController {
     const livroRemovido = await this.livroRepository.remove(id);
 
     return {
-      mensagem: 'livro removido com sucesso',
+      mensagem: 'Livro removido com sucesso',
       produto: livroRemovido,
     };
   }

@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CriaCategoriaDTO {
-  @IsNotEmpty({ message: 'ID não pode ser vazio.' })
   id: string;
 
   @IsString()
