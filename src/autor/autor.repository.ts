@@ -15,11 +15,11 @@ export class AutorRepository {
   }
 
   async buscarAutorPorId(id: string) {
-    const autor = this.buscaPorId(id);
+    const autor = await this.buscaPorId(id);
     return autor;
   }
 
-  private buscaPorId(id: string) {
+  private async buscaPorId(id: string) {
     const existeAutor = this.autores.find((autor) => autor.id === id);
 
     if (!existeAutor) {
@@ -31,7 +31,7 @@ export class AutorRepository {
 
   async atualiza(id: string, dadosAutor: Partial<AutorEntity>) {
     const dadosNaoAtualizaveis = ['id', 'usuarioId'];
-    const autor = this.buscaPorId(id);
+    const autor = await this.buscaPorId(id);
     Object.entries(dadosAutor).forEach(([chave, valor]) => {
       if (dadosNaoAtualizaveis.includes(chave)) {
         return;
@@ -43,7 +43,7 @@ export class AutorRepository {
   }
 
   async remove(id: string) {
-    const autorRemovido = this.buscaPorId(id);
+    const autorRemovido = await this.buscaPorId(id);
     this.autores = this.autores.filter((autor) => autor.id !== id);
     return autorRemovido;
   }

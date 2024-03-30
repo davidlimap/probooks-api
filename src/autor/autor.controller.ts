@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { AutorEntity } from "./autor.entity";
 import { AutorRepository } from "./autor.repository";
 import { v4 as uuid } from 'uuid';
@@ -38,5 +38,11 @@ export class AutorController {
     );
 
     return autoresLista;
+  }
+
+  @Get('/:id')
+  async buscaPorId(@Param('id') id: string) {
+    const autor = await this.autorRepository.buscarAutorPorId(id);
+    return autor;
   }
 }

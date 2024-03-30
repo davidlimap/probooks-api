@@ -44,7 +44,6 @@ export class LivroController {
     const livrosSalvos = await this.livroRepository.listarLivros();
     const livrosLista = livrosSalvos.map(
       async (livro) => {
-        console.log(livro);
         const autorLivro = await this.autorRepository.buscarAutorPorId(livro.autorId);
         new ListaLivroDTO(livro.id, livro.titulo, autorLivro.nome, formatarData(livro.dataPublicacao, FormatoData.PADRAO))
       });

@@ -1,8 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 import { EmailUnico } from "../validacoes/emailUnico.validator";
 export class CriaAutorDTO {
-  @IsNotEmpty({ message: 'ID não pode ser vazio.' })
-  @IsUUID(undefined, { message: 'ID do autor inválido' })
   id: string;
 
   @IsString()
@@ -18,6 +16,5 @@ export class CriaAutorDTO {
   @MaxLength(500, { message: 'A biografia precisa ter no máximo 500 caracteres' })
   biografia: string;
 
-  @IsNotEmpty({ message: 'A Data de cadastro não pode ser vazio.' })
   dataCadastro: Date;
 }
