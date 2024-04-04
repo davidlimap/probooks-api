@@ -3,7 +3,7 @@ import { IsDate, IsNotEmpty, IsNumber, IsUUID, MaxLength, Min, MinDate } from "c
 import { ISBNUnico } from "../validators/isbnUnico.validator";
 
 export class CriaLivroDTO {
-  @IsNotEmpty({ message: 'O nome não pode ser vazio.' })
+  @IsNotEmpty({ message: 'O titulo não pode ser vazio.' })
   titulo: string;
 
   @IsNotEmpty({ message: 'O resumo não pode ser vazio.' })
