@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsUUID, MaxLength, Min, MinDate } from "class-validator";
+import { IsDate, IsNotEmpty, IsNumber, MaxLength, Min, MinDate } from "class-validator";
 import { ISBNUnico } from "../validators/isbnUnico.validator";
 
 export class CriaLivroDTO {
@@ -26,7 +26,7 @@ export class CriaLivroDTO {
   numPaginas: number;
 
   @IsNotEmpty({ message: 'O ISBN não pode ser vazio.' })
-  @ISBNUnico({ message: 'Já existe um livro com este ISBN' })
+  @ISBNUnico({ message: 'Já existe um livro com este ISBN haha' })
   ISBN: string;
 
   @Type(() => Date)
@@ -34,11 +34,9 @@ export class CriaLivroDTO {
   @MinDate(new Date(), { message: 'A data deve ser maior que a data atual.' })
   dataPublicacao: Date;
 
-  @IsNotEmpty({ message: 'ID da categoria não pode ser vazio.' })
-  @IsUUID(undefined, { message: 'ID da categoria inválido' })
+  @IsNotEmpty({ message: 'O ID da Categoria não pode ser vazio.' })
   categoriaId: string;
 
-  @IsNotEmpty({ message: 'ID do autor não pode ser vazio.' })
-  @IsUUID(undefined, { message: 'ID do autor inválido' })
+  @IsNotEmpty({ message: 'O ID do Autor não pode ser vazio.' })
   autorId: string;
 }

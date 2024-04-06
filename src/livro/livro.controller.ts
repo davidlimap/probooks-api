@@ -1,19 +1,21 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { LivroRepository } from "./livro.repository";
 import { CriaLivroDTO } from "./dto/CriaLivro.dto";
 import { LivroEntity } from "./livro.entity";
 import { v4 as uuid } from 'uuid';
 import { ListaLivroDTO } from "./dto/ListaLivro.dto";
 import { formatarData } from "src/utils/formatters";
 import { FormatoData } from "src/enums/FormatoData";
-import { AutorRepository } from "src/autor/autor.repository";
 import { AtualizaLivroDTO } from "./dto/AtualizaLivro.dto";
+import { AutorService } from "src/autor/autor.service";
+import { CategoriaService } from "src/categoria/categoria.service";
+import { LivroService } from "./livro.service";
 
 @Controller('livro')
 export class LivroController {
   constructor(
-    private readonly livroRepository: LivroRepository,
-    private readonly autorRepository: AutorRepository
+    private readonly livroService: LivroService,
+    private readonly categoriaService: CategoriaService,
+    private readonly autorService: AutorService
   ) { }
 
   @Post()
@@ -28,23 +30,27 @@ export class LivroController {
     livroEntity.numPaginas = dadosLivro.numPaginas;
     livroEntity.ISBN = dadosLivro.ISBN;
     livroEntity.dataPublicacao = dadosLivro.dataPublicacao;
-    livroEntity.categoriaId = dadosLivro.categoriaId;
-    livroEntity.autorId = dadosLivro.autorId;
 
-    this.livroRepository.salvar(livroEntity);
+    const categoriaEntity = await this.categoriaService.buscarCategoriaPorId(dadosLivro.categoriaId);
+    livroEntity.categoria = categoriaEntity;
+
+    const autorEntity = await this.autorService.buscarAutorPorId(dadosLivro.autorId);
+    livroEntity.autor = autorEntity;
+
+    this.livroService.salvarLivro(livroEntity);
 
     return {
-      livro: new ListaLivroDTO(livroEntity.id, livroEntity.titulo, livroEntity.autorId, formatarData(livroEntity.dataPublicacao, FormatoData.PADRAO)),
+      livro: new ListaLivroDTO(livroEntity.id, livroEntity.titulo, autorEntity.nome, formatarData(livroEntity.dataPublicacao, FormatoData.PADRAO)),
       messagem: 'Livro criado com sucesso',
     };
   }
 
   @Get()
   async listaLivros() {
-    const livrosSalvos = await this.livroRepository.listarLivros();
+    const livrosSalvos = await this.livroService.listarLivros();
     const livrosLista = livrosSalvos.map(
       async (livro) => {
-        const autorLivro = await this.autorRepository.buscarAutorPorId(livro.autorId);
+        const autorLivro = await this.autorService.buscarAutorPorId(livro.autor.id);
         new ListaLivroDTO(livro.id, livro.titulo, autorLivro.nome, formatarData(livro.dataPublicacao, FormatoData.PADRAO))
       });
 
@@ -56,7 +62,7 @@ export class LivroController {
     @Param('id') id: string,
     @Body() dadosLivro: AtualizaLivroDTO,
   ) {
-    const livroAlterado = await this.livroRepository.atualiza(
+    const livroAlterado = await this.livroService.atualizarLivro(
       id,
       dadosLivro,
     );
@@ -69,7 +75,7 @@ export class LivroController {
 
   @Delete('/:id')
   async remove(@Param('id') id: string) {
-    const livroRemovido = await this.livroRepository.remove(id);
+    const livroRemovido = await this.livroService.removerLivro(id);
 
     return {
       mensagem: 'Livro removido com sucesso',

@@ -1,15 +1,11 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AutorEntity } from "src/autor/autor.entity";
+import { CategoriaEntity } from "src/categoria/categoria.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'livros' })
 export class LivroEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column({ name: 'categoria_id', length: 100, nullable: false })
-  categoriaId: string;
-
-  @Column({ name: 'autor_id', length: 100, nullable: false })
-  autorId: string;
 
   @Column({ name: 'titulo', length: 100, nullable: false })
   titulo: string;
@@ -40,4 +36,14 @@ export class LivroEntity {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
+
+  @ManyToOne(() => AutorEntity,
+    (autor) => autor.livro
+  )
+  autor: AutorEntity;
+
+  @ManyToOne(() => CategoriaEntity,
+    (categoriaEntity) => categoriaEntity.livro
+  )
+  categoria: CategoriaEntity;
 }

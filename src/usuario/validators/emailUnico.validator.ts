@@ -6,27 +6,27 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { LivroService } from '../livro.service';
+import { UsuarioService } from '../usuario.service';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
-export class ISBNUnicoValidator implements ValidatorConstraintInterface {
-  constructor(private readonly livroService: LivroService) { }
+export class EmailUnicoValidator implements ValidatorConstraintInterface {
+  constructor(private readonly usuarioService: UsuarioService) { }
 
   async validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> {
-    const livroComISBNExiste = await this.livroService.existeISBN(value);
-    return !livroComISBNExiste;
+    const usuarioComEmailExiste = await this.usuarioService.emailExiste(value);
+    return !usuarioComEmailExiste;
   }
 }
 
-export const ISBNUnico = (opcoesDeValidacao: ValidationOptions) => {
+export const EmailUnico = (opcoesDeValidacao: ValidationOptions) => {
   return (objeto: object, propriedade: string) => {
     registerDecorator({
       target: objeto.constructor,
       propertyName: propriedade,
       options: opcoesDeValidacao,
       constraints: [],
-      validator: ISBNUnicoValidator,
+      validator: EmailUnicoValidator,
     });
   };
 };

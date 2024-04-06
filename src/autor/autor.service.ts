@@ -14,10 +14,10 @@ export class AutorService {
   ) { }
 
   private async salvar(autorEntity: AutorEntity) {
-    await this.autorRepository.save(autorEntity);
+    return await this.autorRepository.save(autorEntity);
   }
 
-  private async buscaPorId(id: string) {
+  private async buscarPorId(id: string) {
     const existeAutor = await this.autorRepository.findOneBy({ id });
 
     if (!existeAutor) {
@@ -27,10 +27,10 @@ export class AutorService {
   }
 
   async salvarAutor(autorEntity: AutorEntity) {
-    this.salvar(autorEntity);
+    return await this.salvar(autorEntity);
   }
 
-  async listaAutores() {
+  async listarAutores() {
     const autoresSalvos = await this.autorRepository.find();
     const autoresLista = autoresSalvos.map(
       (autor) => new ListaAutorDTO(autor.id, autor.nome, formatarData(autor.dataCadastro, FormatoData.PADRAO)),
@@ -40,13 +40,13 @@ export class AutorService {
   }
 
   async buscarAutorPorId(id: string) {
-    const autor = await this.buscaPorId(id);
+    const autor = await this.buscarPorId(id);
     return autor;
   }
 
-  async atualizaAutor(id: string, dadosAutor: Partial<AutorEntity>) {
+  async atualizarAutor(id: string, dadosAutor: Partial<AutorEntity>) {
     const dadosNaoAtualizaveis = ['id', 'usuarioId'];
-    const autor = await this.buscaPorId(id);
+    const autor = await this.buscarPorId(id);
     Object.entries(dadosAutor).forEach(([chave, valor]) => {
       if (dadosNaoAtualizaveis.includes(chave)) {
         return;
@@ -59,5 +59,9 @@ export class AutorService {
 
   async emailExiste(email: string) {
     return this.autorRepository.findOneBy({ email });
+  }
+
+  async removerAutor(id: string) {
+    return await this.autorRepository.delete(id);
   }
 }

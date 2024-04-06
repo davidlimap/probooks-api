@@ -1,11 +1,13 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { LivroEntity } from "src/livro/livro.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'categorias' })
 export class CategoriaEntity {
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'nome' })
+  @Column({ name: 'nome', length: 200, nullable: false })
   nome: string;
 
   @CreateDateColumn({ name: 'created_at' })
@@ -16,4 +18,9 @@ export class CategoriaEntity {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
+
+  @OneToMany(() => LivroEntity,
+    (livroEntity) => livroEntity.categoria
+  )
+  livro: LivroEntity;
 }

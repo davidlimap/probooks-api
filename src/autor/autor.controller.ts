@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { AutorEntity } from "./autor.entity";
-import { AutorRepository } from "./autor.repository";
 import { v4 as uuid } from 'uuid';
 import { ListaAutorDTO } from "./dto/ListaAutor.dto";
 import { CriaAutorDTO } from "./dto/CriaAutor.dto";
@@ -11,7 +10,6 @@ import { AutorService } from "./autor.service";
 @Controller('autor')
 export class AutorController {
   constructor(
-    private readonly autorRepository: AutorRepository,
     private readonly autorService: AutorService
   ) { }
 
@@ -35,7 +33,7 @@ export class AutorController {
 
   @Get()
   async listAutores() {
-    const autoresSalvos = await this.autorService.listaAutores();
+    const autoresSalvos = await this.autorService.listarAutores();
     return autoresSalvos;
   }
 
