@@ -41,7 +41,7 @@ export class UsuarioService {
 
     for (const varEndereco of dadosUsuario.enderecos) {
       const endereco = new UsuarioEnderecoEntity()
-      endereco.id = uuid();
+
       endereco.rua = varEndereco.rua;
       endereco.numero = varEndereco.numero;
       endereco.complemento = varEndereco.complemento;

@@ -3,6 +3,7 @@ import { CategoriaEntity } from "./categoria.entity";
 import { Repository } from "typeorm";
 import { ListaCategoriaDTO } from "./dto/ListaCategoria.dto";
 import { Injectable } from "@nestjs/common";
+import { CriaCategoriaDTO } from "./dto/CriaCategoria.dto";
 
 @Injectable()
 export class CategoriaService {
@@ -30,8 +31,11 @@ export class CategoriaService {
     return categoriasLista;
   }
 
-  async salvarCategoria(categoriaEntity: CategoriaEntity) {
-    return await this.categoriaRepository.save(categoriaEntity);
+  async salvarCategoria(dadosCategoria: CriaCategoriaDTO) {
+    const categoriaEntity: CategoriaEntity = new CategoriaEntity();
+    categoriaEntity.nome = dadosCategoria.nome;
+    const novaCategoria = await this.categoriaRepository.save(categoriaEntity);
+    return novaCategoria
   }
 
   async buscarCategoriaPorId(id: string) {

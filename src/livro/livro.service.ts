@@ -2,12 +2,20 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { LivroEntity } from "./livro.entity";
 import { Repository } from "typeorm";
+import { CriaLivroDTO } from "./dto/CriaLivro.dto";
+import { CategoriaService } from "src/categoria/categoria.service";
+import { AutorService } from "src/autor/autor.service";
+import { ListaLivroDTO } from "./dto/ListaLivro.dto";
+import { formatarData } from "src/utils/formatters";
+import { FormatoData } from "src/enums/FormatoData";
 
 @Injectable()
 export class LivroService {
   constructor(
     @InjectRepository(LivroEntity)
-    private readonly livroRepository: Repository<LivroEntity>
+    private readonly livroRepository: Repository<LivroEntity>,
+    private readonly categoriaService: CategoriaService,
+    private readonly autorService: AutorService
   ) { }
 
   private async salvar(livroEntity: LivroEntity) {
@@ -57,5 +65,38 @@ export class LivroService {
 
   async removerLivro(id: string) {
     return await this.livroRepository.delete(id);
+  }
+
+  async criarLivro(dadosLivro: CriaLivroDTO) {
+    const livroEntity: LivroEntity = new LivroEntity();
+    livroEntity.titulo = dadosLivro.titulo;
+    livroEntity.resumo = dadosLivro.resumo;
+    livroEntity.sumario = dadosLivro.sumario;
+    livroEntity.preco = dadosLivro.preco;
+    livroEntity.numPaginas = dadosLivro.numPaginas;
+    livroEntity.ISBN = dadosLivro.ISBN;
+    livroEntity.dataPublicacao = dadosLivro.dataPublicacao;
+    livroEntity.quantidadeDisponivel = dadosLivro.quantidadeDisponivel;
+
+    const categoriaEntity = await this.categoriaService.buscarCategoriaPorId(dadosLivro.categoriaId);
+    livroEntity.categoria = categoriaEntity;
+
+    const autorEntity = await this.autorService.buscarAutorPorId(dadosLivro.autorId);
+    livroEntity.autor = autorEntity;
+
+    this.salvarLivro(livroEntity);
+
+    return new ListaLivroDTO(livroEntity.id, livroEntity.titulo, autorEntity.nome, formatarData(livroEntity.dataPublicacao, FormatoData.PADRAO));
+  }
+
+  async listarLivrosSalvos() {
+    const livrosSalvos = await this.listarLivros();
+    const livrosLista = livrosSalvos.map(
+      async (livro) => {
+        const autorLivro = await this.autorService.buscarAutorPorId(livro.autor.id);
+        new ListaLivroDTO(livro.id, livro.titulo, autorLivro.nome, formatarData(livro.dataPublicacao, FormatoData.PADRAO))
+      });
+
+    return livrosLista;
   }
 }

@@ -1,7 +1,5 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CriaCategoriaDTO } from "./dto/CriaCategoria.dto";
-import { CategoriaEntity } from "./categoria.entity";
-import { v4 as uuid } from 'uuid';
 import { ListaCategoriaDTO } from "./dto/ListaCategoria.dto";
 import { CategoriaService } from "./categoria.service";
 
@@ -11,14 +9,11 @@ export class CategoriaController {
 
   @Post()
   async criar(@Body() dadosCategoria: CriaCategoriaDTO) {
-    const categoriaEntity: CategoriaEntity = new CategoriaEntity();
-    categoriaEntity.id = uuid();
-    categoriaEntity.nome = dadosCategoria.nome;
 
-    this.categoriaService.salvarCategoria(categoriaEntity);
+    const novaCategoria = await this.categoriaService.salvarCategoria(dadosCategoria);
 
     return {
-      categoria: new ListaCategoriaDTO(categoriaEntity.id, categoriaEntity.nome),
+      categoria: new ListaCategoriaDTO(novaCategoria.id, novaCategoria.nome),
       messagem: 'Categoria criada com sucesso',
     };
   }

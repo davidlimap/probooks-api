@@ -8,7 +8,6 @@ export class UsuarioController {
 
   @Post()
   async criarUsuario(@Body() dadosUsuario: CriarUsuarioDTO) {
-
     this.usuarioService.salvarUsuario(dadosUsuario);
   }
 }

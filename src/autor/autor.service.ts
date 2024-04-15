@@ -5,6 +5,7 @@ import { AutorEntity } from "./autor.entity";
 import { Repository } from "typeorm";
 import { FormatoData } from "src/enums/FormatoData";
 import { formatarData } from "src/utils/formatters";
+import { CriaAutorDTO } from "./dto/CriaAutor.dto";
 
 @Injectable()
 export class AutorService {
@@ -26,8 +27,18 @@ export class AutorService {
     return existeAutor;
   }
 
-  async salvarAutor(autorEntity: AutorEntity) {
-    return await this.salvar(autorEntity);
+  async salvarAutor(dadosAutor: CriaAutorDTO) {
+
+    const autorEntity = new AutorEntity();
+
+    autorEntity.nome = dadosAutor.nome;
+    autorEntity.email = dadosAutor.email;
+    autorEntity.biografia = dadosAutor.biografia;
+    autorEntity.dataCadastro = new Date();
+
+    const autorSalvo = await this.salvar(autorEntity);
+
+    return autorSalvo;
   }
 
   async listarAutores() {

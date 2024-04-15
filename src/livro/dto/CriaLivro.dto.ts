@@ -14,7 +14,6 @@ export class CriaLivroDTO {
   @MaxLength(100, { message: 'O sumario precisa ter no máximo 100 caracteres' })
   sumario: string;
 
-
   @IsNotEmpty({ message: 'O preço não pode ser vazio.' })
   @IsNumber()
   @Min(0, { message: 'O menor valor de um livro é 0 (gratis)' })
@@ -34,9 +33,15 @@ export class CriaLivroDTO {
   @MinDate(new Date(), { message: 'A data deve ser maior que a data atual.' })
   dataPublicacao: Date;
 
+  @IsNotEmpty({ message: 'A quantidade disponível não pode ser vazia.' })
+  @IsNumber()
+  @Min(0)
+  quantidadeDisponivel: number;
+
   @IsNotEmpty({ message: 'O ID da Categoria não pode ser vazio.' })
   categoriaId: string;
 
   @IsNotEmpty({ message: 'O ID do Autor não pode ser vazio.' })
   autorId: string;
+
 }

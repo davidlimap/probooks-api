@@ -28,6 +28,9 @@ export class LivroEntity {
   @Column({ name: 'dataPublicacao', nullable: false, type: 'date' })
   dataPublicacao: Date;
 
+  @Column({ name: 'quantidade_disponivel', nullable: false })
+  quantidadeDisponivel: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
 
