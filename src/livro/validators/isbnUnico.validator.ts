@@ -6,15 +6,15 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { LivroRepository } from '../livro.repository';
+import { LivroService } from '../livro.service';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class ISBNUnicoValidator implements ValidatorConstraintInterface {
-  constructor(private readonly livroRepository: LivroRepository) { }
+  constructor(private readonly livroService: LivroService) { }
 
   async validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> {
-    const livroComISBNExiste = await this.livroRepository.existeISBN(value);
+    const livroComISBNExiste = await this.livroService.existeISBN(value);
     return !livroComISBNExiste;
   }
 }

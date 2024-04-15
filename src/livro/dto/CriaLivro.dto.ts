@@ -1,9 +1,9 @@
 import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsUUID, MaxLength, Min, MinDate } from "class-validator";
+import { IsDate, IsNotEmpty, IsNumber, MaxLength, Min, MinDate } from "class-validator";
 import { ISBNUnico } from "../validators/isbnUnico.validator";
 
 export class CriaLivroDTO {
-  @IsNotEmpty({ message: 'O nome não pode ser vazio.' })
+  @IsNotEmpty({ message: 'O titulo não pode ser vazio.' })
   titulo: string;
 
   @IsNotEmpty({ message: 'O resumo não pode ser vazio.' })
@@ -13,7 +13,6 @@ export class CriaLivroDTO {
   @IsNotEmpty({ message: 'O sumario não pode ser vazio.' })
   @MaxLength(100, { message: 'O sumario precisa ter no máximo 100 caracteres' })
   sumario: string;
-
 
   @IsNotEmpty({ message: 'O preço não pode ser vazio.' })
   @IsNumber()
@@ -26,7 +25,7 @@ export class CriaLivroDTO {
   numPaginas: number;
 
   @IsNotEmpty({ message: 'O ISBN não pode ser vazio.' })
-  @ISBNUnico({ message: 'Já existe um livro com este ISBN' })
+  @ISBNUnico({ message: 'Já existe um livro com este ISBN haha' })
   ISBN: string;
 
   @Type(() => Date)
@@ -34,11 +33,15 @@ export class CriaLivroDTO {
   @MinDate(new Date(), { message: 'A data deve ser maior que a data atual.' })
   dataPublicacao: Date;
 
-  @IsNotEmpty({ message: 'ID da categoria não pode ser vazio.' })
-  @IsUUID(undefined, { message: 'ID da categoria inválido' })
+  @IsNotEmpty({ message: 'A quantidade disponível não pode ser vazia.' })
+  @IsNumber()
+  @Min(0)
+  quantidadeDisponivel: number;
+
+  @IsNotEmpty({ message: 'O ID da Categoria não pode ser vazio.' })
   categoriaId: string;
 
-  @IsNotEmpty({ message: 'ID do autor não pode ser vazio.' })
-  @IsUUID(undefined, { message: 'ID do autor inválido' })
+  @IsNotEmpty({ message: 'O ID do Autor não pode ser vazio.' })
   autorId: string;
+
 }
