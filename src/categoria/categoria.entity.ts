@@ -1,4 +1,4 @@
-import { LivroEntity } from "src/livro/livro.entity";
+import { LivroEntity } from "../livro/livro.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'categorias' })

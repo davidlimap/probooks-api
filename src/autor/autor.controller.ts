@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ListaAutorDTO } from "./dto/ListaAutor.dto";
 import { CriaAutorDTO } from "./dto/CriaAutor.dto";
-import { FormatoData } from "src/enums/FormatoData";
-import { formatarData } from "src/utils/formatters";
+import { FormatoData } from "../enums/FormatoData";
+import { formatarData } from "../utils/formatters";
 import { AutorService } from "./autor.service";
 
 @Controller('autor')

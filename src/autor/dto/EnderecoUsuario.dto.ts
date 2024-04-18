@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumberString } from "class-validator";
-import { UsuarioEntity } from "src/usuario/usuario.entity";
+import { UsuarioEntity } from "../../usuario/usuario.entity";
 
 export class EnderecoUsuarioDTO {
   id: string;

@@ -17,7 +17,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migration:show": "ts-node -O \"{ \\\"module\\\": \\\"commonjs\\\" }\" -r tsconfig-paths/register node_modules/typeorm/cli.js migration:show --dataSource src/db/data-source-cli.ts",
+    "migration:generate": "ts-node -O \"{ \\\"module\\\": \\\"commonjs\\\" }\" -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate --dataSource src/db/data-source-cli.ts",
+    "migration:run": "ts-node -O \"{ \\\"module\\\": \\\"commonjs\\\" }\" -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run --dataSource src/db/data-source-cli.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

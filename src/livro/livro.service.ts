@@ -1,13 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { LivroEntity } from "./livro.entity";
 import { Repository } from "typeorm";
 import { CriaLivroDTO } from "./dto/CriaLivro.dto";
-import { CategoriaService } from "src/categoria/categoria.service";
-import { AutorService } from "src/autor/autor.service";
+import { CategoriaService } from "../categoria/categoria.service";
+import { AutorService } from "../autor/autor.service";
 import { ListaLivroDTO } from "./dto/ListaLivro.dto";
-import { formatarData } from "src/utils/formatters";
-import { FormatoData } from "src/enums/FormatoData";
+import { formatarData } from "../utils/formatters";
+import { FormatoData } from "../enums/FormatoData";
 
 @Injectable()
 export class LivroService {
@@ -26,7 +26,7 @@ export class LivroService {
     const existeLivro = await this.livroRepository.findOneBy({ id });
 
     if (!existeLivro) {
-      throw new Error('Livro não existe');
+      throw new NotFoundException('Livro não existe');
     }
     return existeLivro;
   }

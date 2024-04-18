@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { UsuarioEnderecoEntity } from "./usuario-endereco.entity";
+import { PedidoEntity } from "../pedido/pedido.entity";
 
 @Entity({ name: 'usuarios' })
 export class UsuarioEntity {
@@ -34,4 +35,9 @@ export class UsuarioEntity {
     { cascade: true }
   )
   enderecos: UsuarioEnderecoEntity[];
+
+  @OneToMany(() => PedidoEntity, (pedido) => pedido.usuario)
+  pedidos: PedidoEntity[];
+
+
 }

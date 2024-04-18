@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { CriaLivroDTO } from "./dto/CriaLivro.dto";
 import { AtualizaLivroDTO } from "./dto/AtualizaLivro.dto";
-import { AutorService } from "src/autor/autor.service";
-import { CategoriaService } from "src/categoria/categoria.service";
+import { AutorService } from "../autor/autor.service";
+import { CategoriaService } from "../categoria/categoria.service";
 import { LivroService } from "./livro.service";
 
 @Controller('livro')

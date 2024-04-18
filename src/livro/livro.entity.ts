@@ -1,6 +1,7 @@
-import { AutorEntity } from "src/autor/autor.entity";
-import { CategoriaEntity } from "src/categoria/categoria.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ItemPedidoEntity } from "../pedido/item-pedido.entity";
+import { AutorEntity } from "../autor/autor.entity";
+import { CategoriaEntity } from "../categoria/categoria.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'livros' })
 export class LivroEntity {
@@ -49,4 +50,7 @@ export class LivroEntity {
     (categoriaEntity) => categoriaEntity.livro
   )
   categoria: CategoriaEntity;
+
+  @OneToMany(() => ItemPedidoEntity, itemPedido => itemPedido.livro)
+  itensPedido: ItemPedidoEntity[];
 }
