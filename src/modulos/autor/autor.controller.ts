@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, UseInterceptors } from "@nestjs/common";
 import { ListaAutorDTO } from "./dto/ListaAutor.dto";
 import { CriaAutorDTO } from "./dto/CriaAutor.dto";
-import { FormatoData } from "../../enums/formatoData";
+import { FormatoData } from "../../utils/enums/formatoData";
 import { formatarData } from "../../utils/formatters";
 import { AutorService } from "./autor.service";
 import { CacheInterceptor } from "@nestjs/cache-manager";

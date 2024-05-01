@@ -1,4 +1,4 @@
-import { StatusPedido } from "../../enums/status-pedido.enum";
+import { StatusPedido } from "../../utils/enums/status-pedido.enum";
 import { UsuarioEntity } from "../usuario/usuario.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ItemPedidoEntity } from "./item-pedido.entity";

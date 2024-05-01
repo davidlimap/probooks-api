@@ -7,7 +7,7 @@ import { CategoriaService } from "../categoria/categoria.service";
 import { AutorService } from "../autor/autor.service";
 import { ListaLivroDTO } from "./dto/ListaLivro.dto";
 import { formatarData } from "../../utils/formatters";
-import { FormatoData } from "../../enums/FormatoData";
+import { FormatoData } from "../../utils/enums/FormatoData";
 
 @Injectable()
 export class LivroService {

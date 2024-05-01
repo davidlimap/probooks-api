@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoEntity } from './pedido.entity';
 import { In, Repository } from 'typeorm';
 import { UsuarioEntity } from '../usuario/usuario.entity';
-import { StatusPedido } from '../../enums/status-pedido.enum';
+import { StatusPedido } from '../../utils/enums/status-pedido.enum';
 import { CriaPedidoDTO } from './dto/CriaPedido.dto';
 import { ItemPedidoEntity } from './item-pedido.entity';
 import { LivroEntity } from '../livro/livro.entity';

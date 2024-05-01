@@ -1,4 +1,4 @@
-import { FormatoData } from "src/enums/FormatoData";
+import { FormatoData } from "./enums/FormatoData";
 
 export function formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO): string {
   if (formato === FormatoData.MES_ANO) {

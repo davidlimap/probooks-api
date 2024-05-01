@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ListaAutorDTO } from "./dto/ListaAutor.dto";
 import { AutorEntity } from "./autor.entity";
 import { In, Repository } from "typeorm";
-import { FormatoData } from "../../enums/FormatoData";
+import { FormatoData } from "../../utils/enums/FormatoData";
 import { formatarData } from "../../utils/formatters";
 import { CriaAutorDTO } from "./dto/CriaAutor.dto";
 
