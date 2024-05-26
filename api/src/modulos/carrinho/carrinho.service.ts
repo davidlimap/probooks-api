@@ -59,6 +59,7 @@ export class CarrinhoService {
 
     const carrinhoAdicionado = { ...carrinhoEntity, usuarioId };
     await this.gerenciadorDeCache.set('carrinho-' + usuarioId, carrinhoAdicionado, 60000);
+    return carrinhoAdicionado;
   }
 
   async buscarCarrinho(id: string): Promise<CarrinhoEntity | null> {
